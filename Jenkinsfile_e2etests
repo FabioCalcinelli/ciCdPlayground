@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+    tools {
+        nodejs 'yarn'
+    }
+
+    stages {
+        stage('checkout') {
+            steps {
+                sh 'git checkout main'
+            }
+        }
+
+        stage('unit tests') {
+            steps {
+                sh 'yarn'
+                sh 'yarn test'
+            }
+        }
+
+        stage('e2e tests') {
+            steps {
+            sh 'yarn build'
+            sh 'yarn test:e2e'
+            }
+        }
+    }
+}
